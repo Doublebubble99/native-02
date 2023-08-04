@@ -8,6 +8,9 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 export default function RegistrationScreen() {
   const [fontsLoaded] = useFonts({
@@ -20,9 +23,7 @@ export default function RegistrationScreen() {
   const styles = StyleSheet.create({
     container: {
       position: "relative",
-      marginTop: 263,
-      width: 375,
-      height: 549,
+      marginTop: 219,
       backgroundColor: "#fff",
       borderTopLeftRadius: 25,
       borderTopRightRadius: 25,
@@ -69,7 +70,6 @@ export default function RegistrationScreen() {
       textAlign: "center",
       fontFamily: "Roboto-Regular",
       fontSize: 16,
-      // lineHeight: "normal",
     },
     refText: {
       color: "#1B4371",
@@ -86,17 +86,22 @@ export default function RegistrationScreen() {
   return (
     <View>
       <ImageBackground imageStyle source={require("./bg-photo.png")}>
-        <View style={styles.container}>
-          <Image source={require("./photo.png")} style={styles.image} />
-          <Text style={styles.title}>Registration</Text>
-          <TextInput placeholder="Login" style={styles.input} />
-          <TextInput placeholder="Email address" style={styles.input} />
-          <TextInput placeholder="Password" style={styles.input} />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Sign up</Text>
-          </TouchableOpacity>
-          <Text style={styles.refText}>Already have account? Sign in</Text>
-        </View>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={styles.container}>
+            <Image source={require("./photo.png")} style={styles.image} />
+            <Text style={styles.title}>Registration</Text>
+            <KeyboardAvoidingView>
+              <TextInput placeholder="Login" style={styles.input} />
+              <TextInput placeholder="Email address" style={styles.input} />
+              <TextInput placeholder="Password" style={styles.input} />
+            </KeyboardAvoidingView>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Sign up</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.refText}>Already have account? Sign in</Text>
+          </View>
+        </TouchableWithoutFeedback>
       </ImageBackground>
     </View>
   );

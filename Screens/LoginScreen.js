@@ -7,6 +7,9 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 export default function LoginScreen() {
   const [fontsLoaded] = useFonts({
@@ -15,10 +18,7 @@ export default function LoginScreen() {
   });
   const styles = StyleSheet.create({
     container: {
-      position: "relative",
-      marginTop: 263,
-      width: 375,
-      height: 489,
+      marginTop: 323,
       backgroundColor: "#fff",
       borderTopLeftRadius: 25,
       borderTopRightRadius: 25,
@@ -65,7 +65,6 @@ export default function LoginScreen() {
       textAlign: "center",
       fontFamily: "Roboto-Regular",
       fontSize: 16,
-      // lineHeight: "normal",
     },
     refText: {
       color: "#1B4371",
@@ -78,20 +77,35 @@ export default function LoginScreen() {
       textDecorationLine: "underline",
     },
   });
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <View>
       <ImageBackground imageStyle source={require("./bg-photo.png")}>
-        <View style={styles.container}>
-          <Text style={styles.title}>Log in</Text>
-          <TextInput placeholder="Email address" style={styles.input} />
-          <TextInput placeholder="Password" style={styles.input} />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Log in</Text>
-          </TouchableOpacity>
-          <Text style={styles.refText}>
-            Don't have account? <Text style={styles.underlined}>Sign up</Text>
-          </Text>
-        </View>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={styles.container}>
+            <Text style={styles.title}>Log in</Text>
+            <KeyboardAvoidingView enabled={false}>
+              <TextInput
+                placeholder="Email address"
+                style={styles.input}
+                onEndEditing={Keyboard.dismiss}
+              />
+              <TextInput
+                placeholder="Password"
+                style={styles.input}
+                onEndEditing={Keyboard.dismiss}
+              />
+            </KeyboardAvoidingView>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Log in</Text>
+            </TouchableOpacity>
+            <Text style={styles.refText}>
+              Don't have account? <Text style={styles.underlined}>Sign up</Text>
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
       </ImageBackground>
     </View>
   );
